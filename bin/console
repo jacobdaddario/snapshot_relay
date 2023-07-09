@@ -21,16 +21,56 @@ class Foo
 
   def foobar
     puts "Working"
-    take_snapshot
+    add_to_snapshot
+  end
+end
+
+class Fizz
+  include SnapshotRelay::DSL
+
+  snapshot_writer :buzz
+  attr_reader :buzz
+
+  def bazz
+    @buzz = [1, 2, 3].sample
+
+    Buzz.new.blah
+    puts "Still doing things"
+
+    add_to_snapshot
+  end
+
+  def dead_method
+    "I shouldn't get invoked by the Snapshot"
+  end
+
+  class Buzz
+    include SnapshotRelay::DSL
+
+    snapshot_writer :fizzbuzz
+    attr_reader :fizzbuzz
+
+    def initialize
+      @fizzbuzz = [4, 5, 6].sample
+    end
+
+    def blah
+      puts "Doing more things"
+      add_to_snapshot
+    end
   end
 end
 
 class Bar
-  def fizzbuzz
-    SnapshotRelay::Snapshot.snapshot_current_attribute_whitelist = [:foo, :bar]
-    Foo.new.foobar
+  include SnapshotRelay::DSL
 
-    puts SnapshotRelay::Snapshot.render_snapshot
+  snapshot_reader :bar, :buzz, :fizzbuzz
+
+  def fizzbuzz
+    Foo.new.foobar
+    Fizz.new.bazz
+
+    puts relay_snapshot
   end
 end
 

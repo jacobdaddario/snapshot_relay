@@ -21,10 +21,15 @@ module SnapshotRelay
       end
     end
 
-    def take_snapshot
+    def add_to_snapshot
       self.class.instance_variable_get(:@_snapshot_source_methods).each do |method|
-        SnapshotRelay::Snapshot.send("#{method}=", send(method))
+        Snapshot.send("#{method}=", send(method))
       end
+    end
+
+    def relay_snapshot
+      Snapshot.snapshot_current_attribute_whitelist = self.class.instance_variable_get(:@_snapshot_attribute_whitelist)
+      Snapshot.render_snapshot
     end
   end
 end
