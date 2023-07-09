@@ -6,6 +6,33 @@ require "snapshot_relay"
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
+class Foo
+  include SnapshotRelay::DSL
+
+  snapshot_writer :foo, :bar
+
+  def foo
+    Time.now
+  end
+
+  def bar
+    rand
+  end
+
+  def foobar
+    puts "Working"
+    take_snapshot
+  end
+end
+
+class Bar
+  def fizzbuzz
+    SnapshotRelay::Snapshot.snapshot_current_attribute_whitelist = [:foo, :bar]
+    Foo.new.foobar
+
+    puts SnapshotRelay::Snapshot.render_snapshot
+  end
+end
 
 require "irb"
 IRB.start(__FILE__)
