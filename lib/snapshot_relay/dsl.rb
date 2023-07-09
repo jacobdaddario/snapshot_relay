@@ -22,6 +22,8 @@ module SnapshotRelay
     end
 
     def add_to_snapshot
+      raise EmptySnapshotError if self.class.instance_variable_get(:@_snapshot_source_methods).nil?
+
       self.class.instance_variable_get(:@_snapshot_source_methods).each do |method|
         Snapshot.send("#{method}=", send(method))
       end
