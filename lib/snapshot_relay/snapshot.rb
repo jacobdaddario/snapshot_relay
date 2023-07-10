@@ -7,10 +7,10 @@ require "active_support/code_generator"
 module SnapshotRelay
   class Snapshot < ActiveSupport::CurrentAttributes
     # These are required attributes for usage of the library
-    attribute :snapshot_current_attribute_whitelist, :status
+    attribute :snapshot_current_attribute_whitelist, :status, :snapshot_name
 
     def self.render_snapshot
-      attributes.slice(*snapshot_current_attribute_whitelist, :status)
+      attributes.slice(*snapshot_current_attribute_whitelist, :status, :snapshot_name)
     end
 
     def self.mark_failure

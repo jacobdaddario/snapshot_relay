@@ -19,6 +19,17 @@ module SnapshotRelay
         snapshot_reader(*attrs)
         snapshot_writer(*attrs)
       end
+
+      def snapshot_name(name)
+        instance_variable_set(:@_snapshot_name, name)
+      end
+
+      def snapshot_errors(e)
+        Snapshot.mark_error
+        Snapshot.render_snapshot
+
+        raise e
+      end
     end
 
     def add_to_snapshot
@@ -29,8 +40,12 @@ module SnapshotRelay
       end
     end
 
-    def relay_snapshot
+    def relay_snapshot(with_status: nil)
+      Snapshot.status = with_status unless with_status.nil?
+
       Snapshot.snapshot_current_attribute_whitelist = self.class.instance_variable_get(:@_snapshot_attribute_whitelist)
+      Snapshot.snapshot_name = self.class.instance_variable_get(:@_snapshot_name) if self.class.instance_variable_get(:@_snapshot_name)
+
       Snapshot.render_snapshot
     end
   end

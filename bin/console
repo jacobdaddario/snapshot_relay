@@ -64,6 +64,7 @@ end
 class Bar
   include SnapshotRelay::DSL
 
+  snapshot_name "Bar Event"
   snapshot_reader :bar, :buzz, :fizzbuzz
 
   def fizzbuzz
