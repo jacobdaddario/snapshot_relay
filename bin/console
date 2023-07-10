@@ -8,7 +8,7 @@ require "snapshot_relay"
 # with your gem easier. You can also use a different console, if you like.
 
 SnapshotRelay.configure do |config|
-  # config.add_relay(SnapshotRelay::Relays::Foo)
+  # config.add_relays(SnapshotRelay::Relays::Foo)
 end
 
 class Foo

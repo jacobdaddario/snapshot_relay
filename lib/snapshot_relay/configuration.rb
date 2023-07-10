@@ -6,12 +6,14 @@ module SnapshotRelay
       @relays ||= []
     end
 
-    def add_relay(relay)
-      @relays << relay
+    def add_relays(*relays)
+      @relays.concat(relay)
     end
 
-    def remove_relay(relay)
-      @relays.delete(relay)
+    def remove_relays(*relays)
+      relays.each do |relay|
+        @relays.delete(relay)
+      end
     end
   end
 end
