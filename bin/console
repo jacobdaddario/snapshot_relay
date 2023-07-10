@@ -7,8 +7,14 @@ require "snapshot_relay"
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
 
+class TestRelay
+  def self.dispatch(snapshot)
+    puts "Relaying the values: #{snapshot.values}"
+  end
+end
+
 SnapshotRelay.configure do |config|
-  # config.add_relays(SnapshotRelay::Relays::Foo)
+  config.add_relays(TestRelay)
 end
 
 class Foo
@@ -76,7 +82,7 @@ class Bar
     Foo.new.foobar
     Fizz.new.bazz
 
-    puts relay_snapshot
+    relay_snapshot
   end
 end
 

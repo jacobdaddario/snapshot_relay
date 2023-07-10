@@ -10,13 +10,13 @@ require "snapshot_relay/dsl"
 require "forwardable"
 
 module SnapshotRelay
-  class < self
+  class << self
     def configuration
       @configuration ||= Configuration.new
     end
-    delegate :configuration, :relays
+    delegate :relays, to: :configuration
 
-    def self.configure
+    def configure
       yield(configuration)
     end
   end

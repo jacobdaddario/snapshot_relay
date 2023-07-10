@@ -46,7 +46,7 @@ module SnapshotRelay
       Snapshot.snapshot_current_attribute_whitelist = self.class.instance_variable_get(:@_snapshot_attribute_whitelist)
       Snapshot.snapshot_name = self.class.instance_variable_get(:@_snapshot_name) if self.class.instance_variable_get(:@_snapshot_name)
 
-      Snapshot.relays.each do |relay|
+      SnapshotRelay.relays.each do |relay|
         relay.dispatch(Snapshot.render_snapshot)
       end
     end
