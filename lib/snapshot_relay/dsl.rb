@@ -24,7 +24,7 @@ module SnapshotRelay
         instance_variable_set(:@_snapshot_name, name)
       end
 
-      def snapshot_errors(e)
+      def snapshot_and_raise(e)
         Snapshot.mark_error
         Snapshot.render_snapshot
 
