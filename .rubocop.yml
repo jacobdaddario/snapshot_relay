@@ -22,3 +22,7 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
   TargetRubyVersion: 3.2
+
+# Exclude:
+RSpec/NamedSubject:
+  Enabled: false
