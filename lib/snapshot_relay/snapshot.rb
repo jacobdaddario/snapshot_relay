@@ -27,6 +27,8 @@ module SnapshotRelay
 
         self.class.attribute attribute_name
         send(method, *args)
+      else
+        super
       end
     end
 

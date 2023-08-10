@@ -3,7 +3,7 @@
 module SnapshotRelay
   class SnapshotRelayError < StandardError; end
 
-  class EmptySnapshotError < StandardError
+  class EmptySnapshotError < SnapshotRelayError
     ERROR_MESSAGE = "You must define at least one snapshot_writer method in your class"
 
     def initialize(msg = ERROR_MESSAGE)
